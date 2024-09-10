@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
     <title>Vue Progressivo</title>
 </head>
 
@@ -16,11 +17,14 @@
             <li>Item 1</li>
             <li>Item 2</li>
             <li>Item 3</li>
+            <li v-for="item in itens">{{item}}</li>
         </ul>
 
-        <input type="text" id="new-item" placeholder="Adicionar novo item">
+        <input type="text" v-model="novoItem" id="new-item" placeholder="Adicionar novo item">
         <br>
         <button id="jquery-btn">Adicionar através do jquery</button>
+        <br>
+        <button @click="adicionarNovoItem">Adicionar através do Vue</button>
     </main>
 
     <script>
@@ -35,6 +39,24 @@
             })
         })
 
+        const App = {
+            data() {
+                return {
+                    novoItem: '',
+                    itens: [],
+                }
+            },
+            methods: {
+                adicionarNovoItem() {
+                    if (this.novoItem) {
+                        this.itens.push(this.novoItem);
+                        this.novoItem = '';
+                    }
+                }
+            }
+        }
+
+        Vue.createApp(App).mount('#app')
     </script>
 </body>
 
